@@ -34,4 +34,4 @@ run command: json-server db.json --delay=1000
 
 ![Edit todo](/docs/edit_todo.png "Edit todo")
 
-![Create todo](/docs/todo_screen.png "Create todo")
+![Create todo](/docs/create_todo.png "Create todo")
