@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutters/models/todo.dart';
 import 'package:http/http.dart' as http;
+// import 'dart:io' show Platform;
 
 class QueryTodo {
   Status status;
@@ -25,7 +26,8 @@ class TodoProvider with ChangeNotifier {
   QueryTodo? get queryTodo => _queryTodo;
 
   // Uri Function(String path) uri = (String path) => Uri.parse('http://localhost:3000/$path');
-  Uri Function(String path) uri = (String path) => Uri.parse('http://10.0.2.2:3000/$path');
+  Uri Function(String path) uri =
+      (String path) => Uri.parse('http://10.0.2.2:3000/$path');
 
   Future changeQueryTodo(Status filterStatus) async {
     _queryTodo = QueryTodo(status: filterStatus);
@@ -34,7 +36,8 @@ class TodoProvider with ChangeNotifier {
 
   Future<void> getListTodo() async {
     try {
-      final http.Response response = await http.get(uri('todos?${_queryTodo.toQuery()}'));
+      final http.Response response =
+          await http.get(uri('todos?${_queryTodo.toQuery()}'));
 
       final extractedData = json.decode(response.body) as List<dynamic>;
       if (extractedData.isEmpty) {
@@ -67,7 +70,7 @@ class TodoProvider with ChangeNotifier {
 
   Future<Todo> addTodo(Todo data) async {
     try {
-      final response =  await http.post(uri('todos'), body: data.toJson());
+      final response = await http.post(uri('todos'), body: data.toJson());
 
       final todo = Todo.fromJson(json.decode(response.body));
       getListTodo();
@@ -80,7 +83,8 @@ class TodoProvider with ChangeNotifier {
 
   Future<Todo> updateTodo(Todo data) async {
     try {
-      final response =  await http.put(uri('todos/${data.id}'), body: data.toJson());
+      final response =
+          await http.put(uri('todos/${data.id}'), body: data.toJson());
 
       final todo = Todo.fromJson(json.decode(response.body));
       getListTodo();
