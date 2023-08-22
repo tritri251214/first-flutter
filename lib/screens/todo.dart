@@ -7,7 +7,8 @@ import 'package:flutters/widgets/bottom_navigation_bar.dart';
 import 'package:flutters/widgets/empty.dart';
 import 'package:flutters/widgets/popup_more.dart';
 import 'package:flutters/widgets/popup_status.dart';
-import 'package:flutters/widgets/loading.dart';
+// import 'package:flutters/widgets/loading.dart';
+import 'package:flutters/widgets/shimmer_loading.dart';
 import 'package:flutters/widgets/status.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class _TodoScreenState extends State<TodoScreen> {
   final List<int> _selection = [];
   Status filterStatus = Status.all;
   late TodoProvider _todoProvider;
+  bool _isLoadingStatus = false;
 
   @override
   void initState() {
@@ -94,6 +96,9 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   void _onMakeCompleted() {
+    setState(() {
+      _isLoadingStatus = true;
+    });
     _todoProvider.makeCompleted(_selection).then((_) {
       showSnackBar(
         context,
@@ -102,6 +107,7 @@ class _TodoScreenState extends State<TodoScreen> {
       );
       setState(() {
         _todoData = _todoProvider.todoData;
+        _isLoadingStatus = false;
       });
     }).catchError((error) {
       showSnackBar(
@@ -109,10 +115,16 @@ class _TodoScreenState extends State<TodoScreen> {
         const Text('Something occur when change status todo'),
         TypeSnackBar.error,
       );
+      setState(() {
+        _isLoadingStatus = false;
+      });
     });
   }
 
   void _onMakePending() {
+    setState(() {
+      _isLoadingStatus = true;
+    });
     _todoProvider.makePending(_selection).then((_) {
       showSnackBar(
         context,
@@ -121,6 +133,7 @@ class _TodoScreenState extends State<TodoScreen> {
       );
       setState(() {
         _todoData = _todoProvider.todoData;
+        _isLoadingStatus = false;
       });
     }).catchError((error) {
       showSnackBar(
@@ -128,10 +141,16 @@ class _TodoScreenState extends State<TodoScreen> {
         const Text('Something occur when change status todo'),
         TypeSnackBar.error,
       );
+      setState(() {
+        _isLoadingStatus = false;
+      });
     });
   }
 
   void _onMakeInActive() {
+    setState(() {
+      _isLoadingStatus = true;
+    });
     _todoProvider.makeInActive(_selection).then((_) {
       showSnackBar(
         context,
@@ -140,6 +159,7 @@ class _TodoScreenState extends State<TodoScreen> {
       );
       setState(() {
         _todoData = _todoProvider.todoData;
+        _isLoadingStatus = false;
       });
     }).catchError((error) {
       showSnackBar(
@@ -147,6 +167,9 @@ class _TodoScreenState extends State<TodoScreen> {
         const Text('Something occur when update todo'),
         TypeSnackBar.error,
       );
+      setState(() {
+        _isLoadingStatus = false;
+      });
     });
   }
 
@@ -169,7 +192,7 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget buildListTodo(BuildContext context) {
     Widget widget;
     if (_isLoading) {
-      widget = const LoadingWidget();
+      widget = const LoadingListPage();
     } else if (_todoData.isEmpty) {
       widget = Container(
         padding: const EdgeInsets.all(64.0),
@@ -177,7 +200,6 @@ class _TodoScreenState extends State<TodoScreen> {
       );
     } else {
       widget = ListView.builder(
-        physics: _isLoading ? const NeverScrollableScrollPhysics() : null,
         itemCount: _todoData.length,
         itemBuilder: (context, index) {
           return Dismissible(
@@ -196,7 +218,7 @@ class _TodoScreenState extends State<TodoScreen> {
               subtitle: Text(_todoData[index].description),
               trailing: TextButton(
                 onPressed: null,
-                child: StatusWidget(status: _todoData[index].status),
+                child: StatusWidget(status: _todoData[index].status, loading: _isLoadingStatus),
               ),
               onTap: () {
                 Navigator.pushNamed(

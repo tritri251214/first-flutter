@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutters/models/todo.dart';
+import 'package:shimmer/shimmer.dart';
 
-class StatusWidget extends StatelessWidget {
-  const StatusWidget({super.key, required this.status});
-
-  final Status status;
-
-  @override
-  Widget build(BuildContext context) {
-    return Component(status: status);
-  }
-}
-
-class Component extends StatefulWidget {
-  const Component({super.key, required this.status});
+class StatusWidget extends StatefulWidget {
+  const StatusWidget({super.key, required this.status, required this.loading});
 
   final Status status;
+  final bool loading;
 
   @override
-  State<Component> createState() => _ComponentState();
+  State<StatusWidget> createState() => _StatusWidgetState();
 }
 
-class _ComponentState extends State<Component> {
+class _StatusWidgetState extends State<StatusWidget> {
   Widget _getStatus(Status status) {
     switch (status) {
       case Status.completed:
@@ -37,6 +28,20 @@ class _ComponentState extends State<Component> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.loading) {
+      return Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        enabled: true,
+        child: Container(
+          width: 60.0,
+          height: 10.0,
+          color: Colors.white,
+          margin: const EdgeInsets.only(bottom: 8.0),
+        ),
+      );
+    }
+
     return _getStatus(widget.status);
   }
 }

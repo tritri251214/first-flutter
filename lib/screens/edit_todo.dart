@@ -5,6 +5,7 @@ import 'package:flutters/utils/snackbar.dart';
 import 'package:flutters/widgets/bottom_navigation_bar.dart';
 import 'package:flutters/widgets/loading.dart';
 import 'package:flutters/widgets/select_status.dart';
+import 'package:flutters/widgets/shimmer_loading.dart';
 
 import 'package:provider/provider.dart';
 
@@ -100,7 +101,7 @@ class _EditTodoState extends State<EditTodo> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: _isLoading ? const LoadingWidget() : Column(
+        child: _isLoading ? const LoadingEditPage() : Column(
           children: <Widget>[
             TextFormField(
               initialValue: _todoInformation.id.toString(),

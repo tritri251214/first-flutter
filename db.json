@@ -1,0 +1,46 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Install flutter SDK",
+      "description": "Link: https://docs.flutter.dev/get-started/install",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "title": "Set up an editor",
+      "description": "Link: https://docs.flutter.dev/get-started/editor",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "title": "Write your first Flutter app",
+      "description": "Link: https://docs.flutter.dev/get-started/codelab",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "title": "Flutter for React Native developers",
+      "description": "Link: https://docs.flutter.dev/get-started/flutter-for/react-native-devs",
+      "status": "inActive"
+    },
+    {
+      "id": 5,
+      "title": "Dart overview",
+      "description": "Link: https://dart.dev/overview",
+      "status": "inActive"
+    },
+    {
+      "id": 6,
+      "title": "111",
+      "description": "111",
+      "status": "inActive"
+    },
+    {
+      "id": 7,
+      "title": "222 update",
+      "description": "222 update 1",
+      "status": "completed"
+    }
+  ]
+}

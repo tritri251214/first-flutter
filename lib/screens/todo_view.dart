@@ -4,7 +4,7 @@ import 'package:flutters/providers/todo_provider.dart';
 import 'package:flutters/screens/create_todo.dart';
 import 'package:flutters/screens/edit_todo.dart';
 import 'package:flutters/widgets/bottom_navigation_bar.dart';
-import 'package:flutters/widgets/loading.dart';
+import 'package:flutters/widgets/shimmer_loading.dart';
 import 'package:flutters/widgets/status.dart';
 
 import 'package:provider/provider.dart';
@@ -77,7 +77,7 @@ class _TodoViewState extends State<TodoView> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: _isLoading ? const LoadingWidget() : Column(
+        child: _isLoading ? const LoadingDetailPage() : Column(
           children: <Widget>[
             Row(
               children: [
@@ -122,7 +122,7 @@ class _TodoViewState extends State<TodoView> {
                   child: const Text('Status: ', style: labelStyle),
                 ),
                 Expanded(
-                  child: StatusWidget(status: _todoInformation.status),
+                  child: StatusWidget(status: _todoInformation.status, loading: false),
                 ),
               ],
             ),
